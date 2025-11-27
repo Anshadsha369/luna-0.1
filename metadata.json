@@ -1,0 +1,7 @@
+{
+  "name": "LUNA - AI Assistant",
+  "description": "A futuristic, cyberpunk-styled AI assistant interface featuring voice analysis visualization, holographic display, and terminal-style system logs.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

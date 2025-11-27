@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LUNA - AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#00ffff", // Neon Cyan
+              "background-light": "#e0e7ff",
+              "background-dark": "#000000",
+              "accent-red": "#ff3b3b",
+              "accent-green": "#3bffa7",
+            },
+            fontFamily: {
+              display: ["Orbitron", "sans-serif"],
+            },
+            animation: {
+              "pulse-glow": "pulse 2s infinite ease-in-out",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Custom Glow Effects that are complex to replicate with pure utility classes */
+      :root {
+        --glow-color: #00ffff;
+      }
+      
+      body {
+        background-color: #000; /* Fallback */
+      }
+
+      .glow {
+        box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color),
+          0 0 20px var(--glow-color), 0 0 40px var(--glow-color);
+      }
+      
+      .text-glow {
+        text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+      }
+      
+      .icon-glow {
+        filter: drop-shadow(0 0 5px var(--glow-color));
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 5px var(--glow-color), 0 0 15px var(--glow-color),
+            0 0 30px var(--glow-color);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 10px var(--glow-color), 0 0 25px var(--glow-color),
+            0 0 50px var(--glow-color);
+        }
+      }
+
+      @keyframes bar-animate {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(0.6);
+        }
+      }
+
+      .bar {
+        animation: bar-animate 1.5s infinite ease-in-out;
+        transform-origin: bottom;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="font-display bg-background-dark text-primary antialiased">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
