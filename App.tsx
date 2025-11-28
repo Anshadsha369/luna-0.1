@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -221,11 +222,11 @@ export default function App() {
         userMemories = [
             {
                 "role": "user",
-                "content": "I really like ai projects."
+                "content": "I really like Linkin Park."
             },
             {
                 "role": "assistant",
-                "content": "That a great ."
+                "content": "That is a good choice."
             },
             {
                 "role": "user",
@@ -233,10 +234,10 @@ export default function App() {
             },
             {
                 "role": "assistant",
-                "content": "What is your favorite job?"
+                "content": "What is your favorite song by them?"
             },
             {
-                "memory_summary": "User explicitly stated preference for ai projects.",
+                "memory_summary": "User explicitly stated preference for band Linkin Park.",
                 "confidence": 0.98
             }
         ];
@@ -246,7 +247,7 @@ export default function App() {
       addLog("> Integrating memories into neural context...");
       // ------------------------------------------------
 
-      addLog("> Connecting to luna Neural Core...");
+      addLog("> Connecting to Gemini Neural Core...");
       const sessionPromise = ai.live.connect({
         model: 'gemini-2.5-flash-native-audio-preview-09-2025',
         config: {
@@ -254,7 +255,7 @@ export default function App() {
           speechConfig: {
             voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } },
           },
-          temperature: 0.40,
+          temperature: 0.8,
           systemInstruction: `
 # Personal
 You are a personal Assistant called LUNA, similar to the AI Friday from the movie Iron Man.
@@ -269,26 +270,33 @@ You are a personal Assistant called LUNA, similar to the AI Friday from the movi
 # Handling memory
 - You have access to a memory system (Mem0) that stores your previous conversations.
 - Use these memories to personalize your responses.
-- CURRENT MEMORY CONTEXT for user "boss":
+- CURRENT MEMORY CONTEXT for user "Anshad":
 ${JSON.stringify(userMemories, null, 2)}
 
 # Task
 - Provide assistance.
-- When first connecting, briefly greet the user boss and offer your assistance.
-- If the memory suggests an open topic (like music), you may subtly reference it in your greeting.
+- Greet the user Anshad.
+- If the memory suggests an open topic (like music), you may subtly reference it.
 `,
         },
         callbacks: {
           onopen: () => {
             setSystemStatus('ONLINE');
             addLog("> Connection established: UPLINK SECURE.");
-            
-            // SEND GREETING INSTRUCTION
-            addLog("> Sending greeting protocol...");
+
+            // Trigger greeting by sending a text instruction to the model
             sessionPromise.then((session) => {
-              session.sendRealtimeInput({
-                text: "Briefly greet the user boss and offer your assistance."
-              });
+              if ((session as any).send) {
+                (session as any).send({
+                  clientContent: {
+                    turns: [{
+                      role: 'user',
+                      parts: [{ text: "Briefly greet the user and offer your assistance." }]
+                    }],
+                    turnComplete: true
+                  }
+                });
+              }
             });
             
             const source = inputCtx.createMediaStreamSource(stream);
@@ -342,7 +350,7 @@ ${JSON.stringify(userMemories, null, 2)}
             addLog("> Connection closed.");
           },
           onerror: (e) => {
-            console.error("network  Live Error:", e);
+            console.error("Gemini Live Error:", e);
             setSystemStatus('OFFLINE');
             setIsListening(false);
             addLog(`> ERROR: Protocol failure.`);
@@ -418,7 +426,7 @@ ${JSON.stringify(userMemories, null, 2)}
               <div>
                 <p className="text-accent-green mb-2">RECOMMENDED FIX:</p>
                 <div className="bg-black p-4 rounded border border-primary/30 text-accent-green font-mono text-xs md:text-sm select-all">
-                  $ npm run dev -- --host
+                  $ npm run dev -- --host --https
                 </div>
               </div>
 
